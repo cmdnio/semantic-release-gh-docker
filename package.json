@@ -1,0 +1,54 @@
+{
+  "name": "semantic-release-gh-docker",
+  "version": "0.0.0-development",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dmitry-zaets/semantic-release-gh-docker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmitry-zaets/semantic-release-gh-docker/issues"
+  },
+  "homepage": "https://github.com/dmitry-zaets/semantic-release-gh-docker#readme",
+  "devDependencies": {
+    "commitlint": "^17.0.3",
+    "eslint": "^8.22.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.3"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E  HUSKY_GIT_PARAMS",
+      "post-merge": "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep package.json && npm install"
+    }
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}
